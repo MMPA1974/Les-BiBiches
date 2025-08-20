@@ -95,6 +95,7 @@
 
     form#ideeForm {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 10px;
@@ -105,7 +106,7 @@
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ccc;
-      flex: 1;
+      width: 100%;
       max-width: 400px;
     }
 
@@ -229,7 +230,7 @@
       <h2>BibicheBreak 🌸</h2>
       <p>📍 Chaque 26 octobre, on célèbre notre sororité ! Propose ton idée pour créer la tradition :</p>
       <form id="ideeForm">
-        <input type="text" placeholder="Ta brillante idée ici..." required />
+        <input type="text" name="message" placeholder="Ta brillante idée ici..." required />
         <button type="submit">Envoyer 💌</button>
       </form>
     </section>
@@ -365,17 +366,22 @@
         if (form) {
           form.addEventListener('submit', function (e) {
             e.preventDefault();
-            const input = form.querySelector('input');
+            const input = form.querySelector('input[name="message"]');
             const idea = input.value;
       
-            emailjs.send("service_xxx", "template_xxx", {
-              message: idea,
-              reply_to: "mathilde.martine.paisley@gmail.com"
-            }).then(() => {
-              showCustomAlert("Merci pour ta proposition 🌸");
-              input.value = '';
+            // Envoi de l'idée par e-mail
+            emailjs.send(
+              "service_vrohu9", 
+              "template_p4v3p25",
+              {
+                title: "Nouvelle idée pour le BibicheBreak 🌸", // Paramètre pour le sujet du mail
+                message: idea // Paramètre pour l'idée
+              }
+            ).then(() => {
+                showCustomAlert("Merci pour ta proposition 🌸");
+                input.value = '';
             }).catch(() => {
-              showCustomAlert("Erreur lors de l'envoi. Réessaie !");
+                showCustomAlert("Erreur lors de l'envoi. Réessaie !");
             });
           });
         }
