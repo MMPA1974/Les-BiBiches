@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 Les Bibiche's 🌸</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <style>
+    /* CSS combiné à partir de style.css */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #fce4ec);
+      margin: 0;
+      padding: 0;
+      color: #4a4a4a;
+    }
+
+    header .site-title {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #d63384;
+      margin: 2rem 0;
+      text-shadow: 1px 1px 2px #f4b3c2;
+    }
+
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      background-color: #fffafc;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      border-radius: 25px;
+      margin: 10px 20px;
+    }
+
+    .tab-button {
+      background: linear-gradient(135deg, #f8bbd0, #f48fb1);
+      border: none;
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .tab-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .tab-section {
+      display: none;
+      padding: 1rem 2rem;
+      background-color: #fff;
+      border-radius: 15px;
+      margin: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    .accueil-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      margin-top: 40px;
+    }
+
+    .accueil-card {
+      background: linear-gradient(145deg, #fce4ec, #ffe0f0);
+      padding: 20px;
+      border-radius: 25px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .accueil-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .accueil-card h2 {
+      color: #c2185b;
+      margin-bottom: 10px;
+    }
+
+    form#ideeForm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    form#ideeForm input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    form#ideeForm button {
+      background-color: #f06292;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .door {
+      height: 100vh;
+      background: radial-gradient(circle at center, #fff8f8, #ffdde1);
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 999;
+      animation: doorOpen 2.5s ease-out forwards;
+    }
+
+    @keyframes doorOpen {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #fce4ec;
+      color: #6c757d;
+      font-size: 0.9rem;
+      margin-top: 40px;
+    }
+
+    li.a-venir {
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    .statut {
+      font-size: 0.85em;
+      color: #999;
+      margin-left: 8px;
+    }
+
+    .clignote {
+      animation: clignoter 1s infinite;
+      text-align: center;
+      color: #d81b60;
+    }
+
+    @keyframes clignoter {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="door"></div>
+
+  <header>
+    <h1 class="site-title">🌸 Les Bibiche's 🌸</h1>
+  </header>
+
+  <nav class="tab-nav">
+    <button class="tab-button" data-tab="accueil">Accueil</button>
+    <button class="tab-button" data-tab="seminaire">Séminaire</button>
+    <button class="tab-button" data-tab="planning">Planning Hebdo</button>
+    <button class="tab-button" data-tab="bibichebreak">BibicheBreak 🌸</button>
+    <button class="tab-button" data-tab="organisation">Notre Organisation</button>
+  </nav>
+
+  <main>
+    <!-- Accueil -->
+    <section class="tab-section active" id="accueil">
+      <div class="accueil-grid">
+        <div class="accueil-card" data-tab="seminaire">
+          <h2>Séminaire</h2>
+          <p>Une journée festive & magique ✨</p>
+        </div>
+        <div class="accueil-card" data-tab="planning">
+          <h2>Planning Hebdo</h2>
+          <p>Chaque samedi à 9h30 ⏰</p>
+        </div>
+        <div class="accueil-card" data-tab="bibichebreak">
+          <h2>BibicheBreak 🌸</h2>
+          <p>Notre jour férié à inventer ensemble 💡</p>
+        </div>
+        <div class="accueil-card" data-tab="organisation">
+          <h2>Notre Organisation</h2>
+          <p>Les rôles de chaque Bibiche 👑</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Séminaire -->
+    <section class="tab-section" id="seminaire">
+      <h2 class="clignote">Vous êtes conviée au Séminaire Bibiche Connexion 🌸<br><span>Une journée de joie, de feu d’artifice et de surprises 💖</span></h2>
+      <ul>
+        <li>10h00 – Accueil & Brunch 🥐🍓</li>
+        <li>11h00 – Icebreaker "Bibiche Mystère" 🎭</li>
+        <li>12h00 – Vision Board ✍️ & papotage</li>
+        <li>13h00 – Déj’ créole & chill 🌺</li>
+        <li>15h00 – Shopping ou balade 🛍️👣</li>
+        <li>17h30 – BibiPause & Goodies 🛍️</li>
+        <li>19h30 – Apéro chic 🍾 + feu d’artifice 🎆</li>
+      </ul>
+    </section>
+
+    <!-- Planning -->
+    <section class="tab-section" id="planning">
+      <h2>Planning Hebdo – Bibiche Boost Day 🔥✨</h2>
+      <p>📅 Tous les samedis à 9h30 (hors vacances scolaires de l’Oise)</p>
+      <p>💬 En ligne sur WhatsApp – lien partagé dans le groupe</p>
+    </section>
+
+    <!-- BibicheBreak -->
+    <section class="tab-section" id="bibichebreak">
+      <h2>BibicheBreak 🌸</h2>
+      <p>📍 Chaque 26 octobre, on célèbre notre sororité ! Propose ton idée pour créer la tradition :</p>
+      <form id="ideeForm">
+        <input type="text" placeholder="Ta brillante idée ici..." required />
+        <button type="submit">Envoyer 💌</button>
+      </form>
+    </section>
+
+    <!-- Organisation -->
+    <section class="tab-section" id="organisation">
+      <h2>Notre Organisation 💼</h2>
+      <ul>
+        <li><strong>Bibiqueen 👑</strong> – Mathilde</li>
+        <li><strong>BibiZen 💕</strong> – Muriel</li>
+        <li><strong>BibiVibe ✨</strong> – Véronique</li>
+        <li><strong>BibiFlash ⚡</strong> – Barbara</li>
+        <li class="a-venir"><strong>MiniBibi 🌸</strong> – Lou-Ann <span class="statut">(en cours d’adhésion)</span></li>
+        <li class="a-venir"><strong>BibiRoots 🌺</strong> – Éloïse <span class="statut">(en cours d’adhésion)</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Bibiche Connexion 🌸 – Tous droits réservés. Powered by Bibiqueen 💖</p>
+  </footer>
+
+  <script>
+    // JavaScript combiné à partir de script.js
+    (function() {
+      // Fonction pour remplacer l'alerte par une boîte de dialogue personnalisée
+      function showCustomAlert(message) {
+        const customAlert = document.createElement('div');
+        customAlert.className = 'custom-alert';
+        customAlert.innerHTML = `
+          <div class="custom-alert-content">
+            <span class="close-button">&times;</span>
+            <p>${message}</p>
+          </div>
+        `;
+        document.body.appendChild(customAlert);
+
+        customAlert.querySelector('.close-button').addEventListener('click', () => {
+          document.body.removeChild(customAlert);
+        });
+
+        // Fermer la boîte de dialogue en cliquant en dehors
+        window.addEventListener('click', (event) => {
+          if (event.target === customAlert) {
+            document.body.removeChild(customAlert);
+          }
+        });
+      }
+
+      // Styles pour la boîte de dialogue personnalisée
+      const alertStyle = document.createElement('style');
+      alertStyle.innerHTML = `
+        .custom-alert {
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.4);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .custom-alert-content {
+          background-color: #fefefe;
+          margin: auto;
+          padding: 20px;
+          border: 1px solid #888;
+          width: 80%;
+          max-width: 400px;
+          border-radius: 10px;
+          text-align: center;
+          position: relative;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .custom-alert-content p {
+          margin: 0;
+          font-size: 1.1rem;
+        }
+
+        .close-button {
+          color: #aaa;
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          font-size: 28px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+          color: black;
+          text-decoration: none;
+          cursor: pointer;
+        }
+      `;
+      document.head.appendChild(alertStyle);
+
+      // Le reste du code JS
+      emailjs.init("U38g2rE-ST79ietg-");
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const sections = document.querySelectorAll('.tab-section');
+        const accueilCards = document.querySelectorAll('.accueil-card');
+      
+        function activateTab(tabId) {
+          sections.forEach(section => {
+            section.classList.toggle('active', section.id === tabId);
+          });
+        }
+      
+        tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            const tab = button.dataset.tab;
+            activateTab(tab);
+          });
+        });
+      
+        accueilCards.forEach(card => {
+          card.addEventListener('click', () => {
+            const tab = card.dataset.tab;
+            activateTab(tab);
+          });
+        });
+      
+        const form = document.getElementById('ideeForm');
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const input = form.querySelector('input');
+            const idea = input.value;
+      
+            emailjs.send("service_xxx", "template_xxx", {
+              message: idea,
+              reply_to: "mathilde.martine.paisley@gmail.com"
+            }).then(() => {
+              showCustomAlert("Merci pour ta proposition 🌸");
+              input.value = '';
+            }).catch(() => {
+              showCustomAlert("Erreur lors de l'envoi. Réessaie !");
+            });
+          });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
