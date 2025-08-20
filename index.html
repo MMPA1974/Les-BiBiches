@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🌸 Les Bibiche's 🌸</title>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <style>
     /* CSS combiné à partir de style.css */
     body {
@@ -92,32 +91,26 @@
       color: #c2185b;
       margin-bottom: 10px;
     }
-
-    form#ideeForm {
+    
+    .mailto-link-container {
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      align-items: center;
-      gap: 10px;
       margin-top: 1rem;
     }
 
-    form#ideeForm input {
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    form#ideeForm button {
+    .mailto-link {
       background-color: #f06292;
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 15px 25px;
       border-radius: 10px;
       font-weight: bold;
-      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .mailto-link:hover {
+      background-color: #d81b60;
     }
 
     .door {
@@ -228,11 +221,10 @@
     <!-- BibicheBreak -->
     <section class="tab-section" id="bibichebreak">
       <h2>BibicheBreak 🌸</h2>
-      <p>📍 Chaque 26 octobre, on célèbre notre sororité ! Propose ton idée pour créer la tradition :</p>
-      <form id="ideeForm">
-        <input type="text" name="message" placeholder="Ta brillante idée ici..." required />
-        <button type="submit">Envoyer 💌</button>
-      </form>
+      <p>📍 Chaque 26 octobre, on célèbre notre sororité ! Clique sur le bouton pour proposer ton idée pour créer la tradition :</p>
+      <div class="mailto-link-container">
+        <a class="mailto-link" href="mailto:mathilde.martine.paisley@gmail.com?subject=Nouvelle%20idée%20pour%20le%20BibicheBreak%20%F0%9F%8C%B8&body=Bonjour%20la%20Bibiche%20Queen%2C%0D%0A%0D%0AVoici%20mon%20idée%20pour%20le%20BibicheBreak%20:%0D%0A%0D%0A%5BInsère%20ton%20idée%20ici%5D%0D%0A%0D%0A%C3%80%20très%20vite%2C%0D%0AUne%20Bibiche">Envoyer mon idée 💌</a>
+      </div>
     </section>
 
     <!-- Organisation -->
@@ -254,139 +246,32 @@
   </footer>
 
   <script>
-    // JavaScript combiné à partir de script.js
-    (function() {
-      // Fonction pour remplacer l'alerte par une boîte de dialogue personnalisée
-      function showCustomAlert(message) {
-        const customAlert = document.createElement('div');
-        customAlert.className = 'custom-alert';
-        customAlert.innerHTML = `
-          <div class="custom-alert-content">
-            <span class="close-button">&times;</span>
-            <p>${message}</p>
-          </div>
-        `;
-        document.body.appendChild(customAlert);
+    // JavaScript pour la navigation des onglets
+    document.addEventListener('DOMContentLoaded', function () {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const sections = document.querySelectorAll('.tab-section');
+      const accueilCards = document.querySelectorAll('.accueil-card');
 
-        customAlert.querySelector('.close-button').addEventListener('click', () => {
-          document.body.removeChild(customAlert);
-        });
-
-        // Fermer la boîte de dialogue en cliquant en dehors
-        window.addEventListener('click', (event) => {
-          if (event.target === customAlert) {
-            document.body.removeChild(customAlert);
-          }
+      function activateTab(tabId) {
+        sections.forEach(section => {
+          section.classList.toggle('active', section.id === tabId);
         });
       }
 
-      // Styles pour la boîte de dialogue personnalisée
-      const alertStyle = document.createElement('style');
-      alertStyle.innerHTML = `
-        .custom-alert {
-          position: fixed;
-          z-index: 1000;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgba(0,0,0,0.4);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .custom-alert-content {
-          background-color: #fefefe;
-          margin: auto;
-          padding: 20px;
-          border: 1px solid #888;
-          width: 80%;
-          max-width: 400px;
-          border-radius: 10px;
-          text-align: center;
-          position: relative;
-          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .custom-alert-content p {
-          margin: 0;
-          font-size: 1.1rem;
-        }
-
-        .close-button {
-          color: #aaa;
-          position: absolute;
-          top: 10px;
-          right: 15px;
-          font-size: 28px;
-          font-weight: bold;
-          cursor: pointer;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-          color: black;
-          text-decoration: none;
-          cursor: pointer;
-        }
-      `;
-      document.head.appendChild(alertStyle);
-
-      // Le reste du code JS
-      emailjs.init("U38g2rE-ST79ietg-");
-      
-      document.addEventListener('DOMContentLoaded', function () {
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const sections = document.querySelectorAll('.tab-section');
-        const accueilCards = document.querySelectorAll('.accueil-card');
-      
-        function activateTab(tabId) {
-          sections.forEach(section => {
-            section.classList.toggle('active', section.id === tabId);
-          });
-        }
-      
-        tabButtons.forEach(button => {
-          button.addEventListener('click', () => {
-            const tab = button.dataset.tab;
-            activateTab(tab);
-          });
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const tab = button.dataset.tab;
+          activateTab(tab);
         });
-      
-        accueilCards.forEach(card => {
-          card.addEventListener('click', () => {
-            const tab = card.dataset.tab;
-            activateTab(tab);
-          });
-        });
-      
-        const form = document.getElementById('ideeForm');
-        if (form) {
-          form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const input = form.querySelector('input[name="message"]');
-            const idea = input.value;
-      
-            // Envoi de l'idée par e-mail
-            emailjs.send(
-              "service_vrohru9", 
-              "template_p4v3p25",
-              {
-                title: "Nouvelle idée pour le BibicheBreak 🌸",
-                message: idea
-              }
-            ).then(() => {
-                showCustomAlert("Merci pour ta proposition 🌸");
-                input.value = '';
-            }).catch(() => {
-                showCustomAlert("Erreur lors de l'envoi. Réessaie !");
-            });
-          });
-        }
       });
-    })();
+
+      accueilCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const tab = card.dataset.tab;
+          activateTab(tab);
+        });
+      });
+    });
   </script>
 </body>
 </html>
